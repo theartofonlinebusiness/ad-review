@@ -36,7 +36,8 @@
     font-family:var(--body);
     color:var(--ink);
     background:var(--peach);
-    line-height:1.55;
+    line-height:1.6;
+    font-size:17.5px;
     -webkit-font-smoothing:antialiased;
   }
   .wrap{max-width:760px;margin:0 auto;padding:24px 20px 64px}
@@ -45,7 +46,7 @@
   h2{font-size:clamp(22px,4vw,32px);color:var(--navy);font-weight:600}
   h3{font-size:18px;font-weight:600;letter-spacing:.02em}
   p{margin:0 0 16px}
-  .lede{font-size:clamp(17px,2.4vw,20px);color:var(--muted)}
+  .lede{font-size:clamp(18.5px,2.5vw,22px);color:var(--muted)}
   .eyebrow{font-family:var(--title);text-transform:uppercase;letter-spacing:.14em;font-size:13px;font-weight:600;color:var(--chili);margin:0 0 10px}
   .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px}
   .screen{display:none;animation:fade .35s ease}
@@ -57,7 +58,7 @@
   .badge{display:inline-flex;align-items:center;gap:9px;background:#fff;border:1.5px solid var(--chili);border-radius:999px;padding:10px 20px;font-size:15.5px;font-weight:700;color:var(--navy);margin-bottom:20px;line-height:1.25}
   .dot{width:8px;height:8px;border-radius:50%;background:var(--shamrock);display:inline-block}
   .checks{margin:22px 0 0;padding:0;list-style:none}
-  .checks li{display:flex;gap:11px;align-items:flex-start;margin-bottom:11px;font-size:16px}
+  .checks li{display:flex;gap:11px;align-items:flex-start;margin-bottom:13px;font-size:17.5px}
   .checks .ic{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:var(--shamrock);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin-top:1px}
   .who{margin-top:22px;padding:14px 16px;background:var(--island);border:1px solid var(--line);border-left:4px solid var(--chili);border-radius:10px;font-size:15px;color:var(--muted)}
 
@@ -71,19 +72,30 @@
   .btn-row{display:flex;gap:12px;align-items:center;margin-top:18px}
 
   /* form */
-  label.q{display:block;font-weight:600;color:var(--navy);margin:22px 0 8px;font-size:15px}
-  label.q .sub{display:block;font-weight:400;color:var(--muted);font-size:13.5px;margin-top:2px}
+  label.q{display:block;font-weight:600;color:var(--navy);margin:24px 0 9px;font-size:17px}
+  label.q .sub{display:block;font-weight:400;color:var(--muted);font-size:15px;margin-top:4px;line-height:1.5}
   .req{color:var(--chili)}
   select,input[type=text],input[type=email],input[type=number],textarea{
-    width:100%;font-family:var(--body);font-size:16px;color:var(--ink);
-    padding:13px 14px;border:1px solid var(--line);border-radius:11px;background:#ffff;outline:none;transition:border-color .15s ease, box-shadow .15s ease}
+    width:100%;font-family:var(--body);font-size:17px;color:var(--ink);
+    padding:14px 16px;border:1px solid var(--line);border-radius:11px;background:#fff;outline:none;transition:border-color .15s ease, box-shadow .15s ease}
+  select{appearance:none;-webkit-appearance:none;padding-right:46px;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%230e2235' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 16px center}
   select:focus,input:focus,textarea:focus{border-color:var(--cobalt);box-shadow:0 0 0 3px rgba(24,122,176,.14)}
   textarea{min-height:120px;resize:vertical}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   @media(max-width:560px){.grid2{grid-template-columns:1fr}}
-  .hint{font-size:13px;color:var(--muted);margin-top:6px}
-  .filedrop{border:1.5px dashed var(--line);border-radius:11px;padding:16px;text-align:center;color:var(--muted);font-size:14px;background:var(--island)}
+  .hint{font-size:14px;color:var(--muted);margin-top:6px}
+  .filedrop{display:block;border:2px dashed var(--cobalt);border-radius:12px;padding:22px 16px;text-align:center;color:var(--navy);font-size:16px;font-weight:600;background:var(--island);cursor:pointer;transition:transform .08s ease, background .15s ease, border-color .15s ease}
+  .filedrop:hover{background:#eef4f7}
+  .filedrop:active{transform:scale(.985);background:#e4edf2;border-color:var(--navy)}
   .filedrop input{display:none}
+  .instr{margin:8px 0 0;padding:0 0 0 2px;list-style:none}
+  .instr li{position:relative;padding:8px 0 8px 26px;font-size:15px;color:var(--muted);line-height:1.5;border-bottom:1px solid var(--line)}
+  .instr li:last-child{border-bottom:0}
+  .instr li::before{content:"";position:absolute;left:2px;top:15px;width:8px;height:8px;border-radius:50%;background:var(--chili)}
+  .instr strong{color:var(--navy)}
+  .callout{margin-top:10px;padding:12px 14px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--marigold);border-radius:10px;font-size:14.5px;color:var(--muted)}
   .filename{color:var(--shamrock);font-weight:600;margin-top:8px;font-size:14px}
   .err{color:var(--chili);font-size:13.5px;font-weight:600;margin-top:10px;display:none}
 
@@ -140,7 +152,7 @@
     <div class="hero">
       <span class="badge"><span class="dot"></span> Only for course creators and coaches already running Meta ads</span>
       <h1>Find the #1 thing costing you leads or sales right now</h1>
-      <p class="lede">Paste one of your live Facebook or Instagram ads and your numbers. In about two minutes you get the single biggest fix, ranked the way I'd rank it if I opened your account myself.</p>
+      <p class="lede">Screenshot one of your live Facebook or Instagram ads and your numbers. The moment you submit, you get the single biggest fix, ranked the way I'd rank it if I opened your account myself.</p>
       <ul class="checks">
         <li><span class="ic">&#10003;</span> I check your ad in the order that actually moves money: tracking, objective, audience, creative, page, then the data.</li>
         <li><span class="ic">&#10003;</span> You get one clear next fix, not a list of 20 things that leaves you stuck.</li>
@@ -156,7 +168,7 @@
         <img src="podcast.jpg" alt="Kwadwo, host of The Art of Online Business" />
         <div>
           <h3>Who's reviewing your ad</h3>
-          <p>I'm Kwadwo, say QUĀY-jo. I run Facebook and Instagram ads for online course creators, a lot of them earning $350k to $1.2M a year, and I host The Art of Online Business podcast, which has passed 5 million downloads. This is the same first read I'd give a paying client, in the same order I'd actually check the account.</p>
+          <p>I'm Kwadwo. I've run Facebook and Instagram ads for online course creators since 2020, a lot of them earning $350k to $1.6M a year, and I host The Art of Online Business podcast, which has over 5 million downloads. This is the same first read I'd give a paying client, in the same order I'd actually check the account.</p>
         </div>
       </section>
     </div>
@@ -166,17 +178,36 @@
   <section id="s-form" class="screen">
     <div class="steps"><span class="s on"></span><span class="s"></span><span class="s"></span></div>
     <p class="eyebrow">Step 1 of 2 &middot; Your ad</p>
-    <h2>Tell me what you're running</h2>
-    <p class="lede" style="margin-bottom:6px">Fill in what you have. The more real numbers you give me, the sharper the review.</p>
+    <h2>Show me your ad</h2>
+    <p class="lede" style="margin-bottom:6px">A few taps and one upload. The moment you submit, you get your biggest fix.</p>
 
     <div class="card" style="margin-top:20px">
+      <label class="q">Screenshot your ad and your numbers <span class="req">*</span>
+        <span class="sub">Two screenshots give the best read:</span>
+      </label>
+      <ul class="instr">
+        <li><strong>1. Your Ads Manager numbers.</strong> Set the date to a 4-day range that includes today. Then set your columns to show: Cost per result, CTR (all), CTR (link), Reach, Frequency, CPM, Amount spent, and Results. Add ROAS if this is a sales campaign. To pick those columns, click Columns, then Customize Columns, and choose them.</li>
+        <li><strong>2. The ad itself.</strong> Screenshot the visual, a graphic or video. If it's a carousel, screenshot each slide, 1, 2, 3, and so on.</li>
+      </ul>
+      <div class="callout">Do this in the real Ads Manager on a laptop or desktop, not the mobile app on your Facebook business page. The numbers and columns you need are only there.</div>
+      <label class="filedrop" for="f-file" style="margin-top:14px">
+        <span id="f-file-label">Tap to add your screenshots</span>
+        <input type="file" id="f-file" accept="image/*" multiple />
+        <div class="filename" id="f-file-name"></div>
+      </label>
+
+      <label class="q">Paste the main copy from this ad
+        <span class="sub">This is the Primary Text field from inside Ads Manager. Optional, but it lets me give you a much better next-step recommendation.</span>
+      </label>
+      <textarea id="f-copy" placeholder="Attention course creators who&hellip;"></textarea>
+
       <label class="q">What are you running this ad to? <span class="req">*</span></label>
       <select id="f-goal">
         <option value="">Choose one</option>
         <option value="leadmagnet">A free lead magnet (opt-in)</option>
         <option value="webinar">A free webinar, challenge, or workshop</option>
         <option value="lto">A low-ticket offer ($7 to $47)</option>
-        <option value="launch">A launch (paid course or program)</option>
+        <option value="launch">A paid course or program</option>
         <option value="other">Something else</option>
       </select>
 
@@ -200,71 +231,21 @@
         <option value="no">No</option>
       </select>
 
-      <label class="q">Paste the main copy from this ad
-        <span class="sub">The hook and body text. Optional, but it sharpens the read.</span>
+      <label class="q">Is your ad set showing "Learning limited"?
+        <span class="sub">In Ads Manager, the ad set's Delivery column reads "Learning limited" when this is happening.</span>
       </label>
-      <textarea id="f-copy" placeholder="Attention course creators who&hellip;"></textarea>
-
-      <label class="q">Screenshot of the ad and your metrics
-        <span class="sub">Two shots help most. First, your Ads Manager table set to the last 3 to 4 days (or the by-day breakdown) showing cost per result, CTR all, CTR link, reach, frequency, CPM, amount spent, results, and ROAS if you're selling. Second, the ad itself, the visual plus the primary text and headline. The live version reads these directly.</span>
-      </label>
-      <label class="filedrop" for="f-file">
-        <span id="f-file-label">Tap to add a screenshot (ad or Ads Manager numbers)</span>
-        <input type="file" id="f-file" accept="image/*" />
-        <div class="filename" id="f-file-name"></div>
-      </label>
-
-      <label class="q">Your numbers from the last few days
-        <span class="sub">Enter the ones you have. Leave the rest blank.</span>
-      </label>
-      <div class="grid2">
-        <div>
-          <input type="number" step="0.01" id="f-ctrall" placeholder="CTR all %" />
-          <div class="hint">CTR (all), e.g. 1.4</div>
-        </div>
-        <div>
-          <input type="number" step="0.01" id="f-ctr" placeholder="Link CTR %" />
-          <div class="hint">Link CTR, e.g. 0.9</div>
-        </div>
-        <div>
-          <input type="number" step="0.01" id="f-cpr" placeholder="Cost per result $" />
-          <div class="hint">Cost per lead or per sale</div>
-        </div>
-        <div>
-          <input type="number" id="f-reach" placeholder="Reach (people)" />
-          <div class="hint">Unique people reached</div>
-        </div>
-        <div>
-          <input type="number" step="0.1" id="f-freq" placeholder="Frequency" />
-          <div class="hint">e.g. 1.8</div>
-        </div>
-        <div>
-          <input type="number" step="0.1" id="f-optin" placeholder="Opt-in / page conversion %" />
-          <div class="hint">If sending to a page, e.g. 22</div>
-        </div>
-        <div>
-          <input type="number" id="f-spend" placeholder="Daily budget $" />
-          <div class="hint">Per day, this campaign</div>
-        </div>
-        <div>
-          <input type="number" step="0.01" id="f-cpm" placeholder="CPM $" />
-          <div class="hint">Cost per 1,000, e.g. 18</div>
-        </div>
-      </div>
-
-      <label class="q">Is your ad set showing "Learning Limited"?</label>
       <select id="f-ll">
         <option value="">Not sure or it doesn't say</option>
-        <option value="yes">Yes, it says Learning Limited</option>
+        <option value="yes">Yes, it says Learning limited</option>
         <option value="no">No, it's out of learning</option>
       </select>
 
-      <label class="q">Over the last 3 to 4 days, your cost per result is <span class="req">*</span></label>
+      <label class="q">Over your 4-day range, your cost per result is trending <span class="req">*</span></label>
       <select id="f-trend">
         <option value="">Choose one</option>
         <option value="down">Stable or going down</option>
         <option value="up">Climbing</option>
-        <option value="early">Too early to tell (under 4 days or under 500 reach)</option>
+        <option value="early">Too early to tell (under 4 days or under 500 people reached)</option>
       </select>
 
       <label class="q">If you had to name your biggest worry right now <span class="req">*</span></label>
@@ -272,8 +253,8 @@
         <option value="">Choose one</option>
         <option value="creative">My creative isn't stopping the scroll</option>
         <option value="copy">My copy isn't landing</option>
-        <option value="leadcost">Leads or results cost too much</option>
-        <option value="scale">I can't tell what to keep, kill, or scale</option>
+        <option value="leadcost">Leads or sales cost too much</option>
+        <option value="scale">I can't tell what's working and what to change</option>
         <option value="nosales">I'm getting clicks but no sales</option>
         <option value="unsure">Honestly, I don't know what's wrong</option>
       </select>
@@ -374,7 +355,7 @@ const CONFIG = {
     testing:{ name:"The Ad Testing Cheat Code", price:"$37", url:"https://quayjo.thrivecart.com/ad-testing-cheat-code/",
               desc:"My testing order for cutting lead cost without guessing. Built for lead magnet and webinar ads that need cheaper results." },
     lto:    { name:"The Low-Ticket Offer Ad Playbook", price:"$37", url:"https://quayjo.thrivecart.com/lto",
-              desc:"A day-by-day read on what to keep, kill, and raise budget on when you're running ads to a $7 to $47 offer. Order bump adds 5 proven ad copy examples for $17." },
+              desc:"A day-by-day read on what to keep, turn off, and add budget to when you're running ads to a $7 to $47 offer. Order bump adds 5 proven ad copy examples for $17." },
     canva:  { name:"The 2X ROAS Canva Ad Templates", price:"$37", url:"https://quayjo.thrivecart.com/canva-ad-templates/",
               desc:"23 plug-and-play Facebook and Instagram templates built from my best client images, so your creative stops the scroll without hiring a designer. Order bump adds the Ad Copy Vault for $17." },
     copyvault:{ name:"The 2X ROAS Ad Copy Vault", price:"$37", url:"https://quayjo.thrivecart.com/2x-adcopy/",
@@ -409,22 +390,28 @@ function restart(){ go('s-landing'); }
 
 /* file label */
 document.getElementById('f-file').addEventListener('change',function(){
-  const n = this.files && this.files[0] ? this.files[0].name : '';
-  document.getElementById('f-file-name').textContent = n ? ('Added: '+n) : '';
-  document.getElementById('f-file-label').textContent = n ? 'Screenshot added' : 'Tap to add a screenshot (ad or Ads Manager numbers)';
+  const c = this.files ? this.files.length : 0;
+  document.getElementById('f-file-name').textContent = c ? ('Added: '+c+' screenshot'+(c>1?'s':'')) : '';
+  document.getElementById('f-file-label').textContent = c ? 'Add more if you need to' : 'Tap to add your screenshots';
 });
 
 /* =====================================================================
    STEP 1: collect + validate
    ===================================================================== */
-function num(id){ const v = parseFloat(document.getElementById(id).value); return isNaN(v)?null:v; }
-function val(id){ return document.getElementById(id).value; }
+function num(id){ const el=document.getElementById(id); if(!el) return null; const v=parseFloat(el.value); return isNaN(v)?null:v; }
+function val(id){ const el=document.getElementById(id); return el?el.value:''; }
 
 function submitForm(){
   const required = ['f-goal','f-objective','f-tracking','f-trend','f-worry'];
-  const missing = required.some(id=>!val(id));
-  if(missing){ document.getElementById('form-err').style.display='block'; return; }
-  document.getElementById('form-err').style.display='none';
+  const fileEl = document.getElementById('f-file');
+  const noShot = !fileEl || !fileEl.files || fileEl.files.length===0;
+  const missing = required.some(id=>!val(id)) || noShot;
+  const err = document.getElementById('form-err');
+  err.textContent = noShot
+    ? 'Add at least one screenshot, then answer the starred questions so I can give you a real read.'
+    : 'Pick an answer for each starred question so I can give you a real read.';
+  if(missing){ err.style.display='block'; return; }
+  err.style.display='none';
 
   ANSWERS = {
     goal: val('f-goal'),
@@ -503,7 +490,7 @@ const CHECK_ORDER = [
   {key:'copy',       label:'Ad copy (earns the click)'},
   {key:'page',       label:'Landing page (one job, CTA above the fold)'},
   {key:'funnel',     label:'Funnel (tripwire, order bump, follow-up)'},
-  {key:'data',       label:'The data (keep, kill, scale)'}
+  {key:'data',       label:'The data (keep, pause, or add budget)'}
 ];
 
 function sellsSomething(goal){ return goal==='lto' || goal==='launch'; }
@@ -643,7 +630,7 @@ function diagnose(a){
     return build('data',
       'Your ad is alive, you just can’t read the scoreboard',
       "You're running to a low-ticket offer and the question isn't whether the ad works, it's what to do next. That's a reading-the-data problem, and guessing here is what stalls most low-ticket offers.",
-      "Use the day-by-day read: what to keep, what to kill, and when to raise budget, in that order. Only scale once it's profitable, and only 15% a day so you don't reset the algorithm. If leads look fine but sales don't come, test the 7-day click, 1-day view window for the longer decision cycle.",
+      "Use the day-by-day read: what to keep, what to turn off, and when to add budget, in that order. Only grow it once it's profitable, and only 15% a day so you don't reset the algorithm. If leads look fine but sales don't come, test the 7-day click, 1-day view window for the longer decision cycle.",
       O.lto, 'data', a);
   }
   if(a.worry==='nosales'){
@@ -659,7 +646,7 @@ function diagnose(a){
     return build('scaleup',
       'Good news, your ad is actually working',
       "Your click-through is strong and your cost is stable or dropping. Nothing here is broken. At this point the lever isn't a fix, it's structure: scaling the winner without breaking it and building the funnel underneath so each lead is worth more.",
-      "Scale vertically first, more budget on the same audience, 15% a day. Add a tripwire or order bump so you recoup ad spend faster. This is the stage where having someone read the account with you pays for itself.",
+      "Grow vertically first, more budget on the same audience, 15% a day. Add a tripwire or order bump so you recoup ad spend faster. This is the stage where having someone read the account with you pays for itself.",
       O.adroom, 'data', a);
   }
 
@@ -700,7 +687,7 @@ function metricFlags(a){
     else if(a.ctr>=1) f.push(['good','Link CTR '+a.ctr+'%','Strong. The hook and visual are landing.']);
     else if(a.ctr>=0.5) f.push(['watch','Link CTR '+a.ctr+'%','Lukewarm. Usually the hook or the visual.']);
     else f.push(['warn','Link CTR '+a.ctr+'%','Below 0.5%. The creative isn’t stopping the scroll.']);
-  } else f.push(['na','Link CTR','Not entered. This is the second most useful number after cost trend.']);
+  }
 
   if(a.ctrall!==null){
     if(a.ctrall>=1.5) f.push(['good','CTR all '+a.ctrall+'%','Strong. The visual is stopping the scroll.']);
