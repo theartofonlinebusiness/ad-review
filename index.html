@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The 2-Minute Ad Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  /* ===== Brand tokens (from brand-guide.md) ===== */
+  :root{
+    --navy:#0e2235;
+    --true-blue:#1160a1;
+    --cobalt:#187AB0;
+    --seaside:#52B8BF;
+    --shamrock:#008d67;
+    --chili:#EF4B23;
+    --sunset:#f37533;
+    --marigold:#faa82f;
+    --cta:#fec419;
+    --overcast:#e9e9eb;
+    --peach:#f9f8f2;
+    --island:#f7f9f9;
+    --ink:#0e2235;
+    --muted:#4a5a67;
+    --line:#d8dee3;
+    --radius:14px;
+    --shadow:0 10px 30px rgba(14,34,53,.10);
+    --title:'Oswald',system-ui,sans-serif;
+    --body:'Inter',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:var(--body);
+    color:var(--ink);
+    background:var(--peach);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:24px 20px 64px}
+  h1,h2,h3{font-family:var(--title);text-transform:uppercase;letter-spacing:.01em;line-height:1.05;margin:0 0 .4em}
+  h1{font-size:clamp(30px,6vw,52px);color:var(--navy);font-weight:700}
+  h2{font-size:clamp(22px,4vw,32px);color:var(--navy);font-weight:600}
+  h3{font-size:18px;font-weight:600;letter-spacing:.02em}
+  p{margin:0 0 16px}
+  .lede{font-size:clamp(17px,2.4vw,20px);color:var(--muted)}
+  .eyebrow{font-family:var(--title);text-transform:uppercase;letter-spacing:.14em;font-size:13px;font-weight:600;color:var(--chili);margin:0 0 10px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px}
+  .screen{display:none;animation:fade .35s ease}
+  .screen.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  /* hero */
+  .hero{padding:28px 0 10px}
+  .badge{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--navy);margin-bottom:18px}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--shamrock);display:inline-block}
+  .checks{margin:22px 0 0;padding:0;list-style:none}
+  .checks li{display:flex;gap:11px;align-items:flex-start;margin-bottom:11px;font-size:16px}
+  .checks .ic{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:var(--shamrock);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin-top:1px}
+  .who{margin-top:22px;padding:14px 16px;background:var(--island);border:1px solid var(--line);border-left:4px solid var(--chili);border-radius:10px;font-size:15px;color:var(--muted)}
+
+  /* buttons */
+  .btn{appearance:none;border:0;cursor:pointer;font-family:var(--title);text-transform:uppercase;letter-spacing:.05em;font-weight:600;font-size:17px;padding:16px 26px;border-radius:12px;transition:transform .06s ease, box-shadow .2s ease;width:100%}
+  .btn:active{transform:translateY(1px)}
+  .btn-primary{background:var(--cta);color:var(--navy);box-shadow:0 6px 18px rgba(254,196,25,.45)}
+  .btn-primary:hover{box-shadow:0 8px 22px rgba(254,196,25,.6)}
+  .btn-dark{background:var(--navy);color:#fff}
+  .btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--line);box-shadow:none;font-size:14px;padding:11px 18px;width:auto}
+  .btn-row{display:flex;gap:12px;align-items:center;margin-top:18px}
+
+  /* form */
+  label.q{display:block;font-weight:600;color:var(--navy);margin:22px 0 8px;font-size:15px}
+  label.q .sub{display:block;font-weight:400;color:var(--muted);font-size:13.5px;margin-top:2px}
+  .req{color:var(--chili)}
+  select,input[type=text],input[type=email],input[type=number],textarea{
+    width:100%;font-family:var(--body);font-size:16px;color:var(--ink);
+    padding:13px 14px;border:1px solid var(--line);border-radius:11px;background:#ffff;outline:none;transition:border-color .15s ease, box-shadow .15s ease}
+  select:focus,input:focus,textarea:focus{border-color:var(--cobalt);box-shadow:0 0 0 3px rgba(24,122,176,.14)}
+  textarea{min-height:120px;resize:vertical}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:560px){.grid2{grid-template-columns:1fr}}
+  .hint{font-size:13px;color:var(--muted);margin-top:6px}
+  .filedrop{border:1.5px dashed var(--line);border-radius:11px;padding:16px;text-align:center;color:var(--muted);font-size:14px;background:var(--island)}
+  .filedrop input{display:none}
+  .filename{color:var(--shamrock);font-weight:600;margin-top:8px;font-size:14px}
+  .err{color:var(--chili);font-size:13.5px;font-weight:600;margin-top:10px;display:none}
+
+  /* progress */
+  .steps{display:flex;gap:6px;margin:0 0 22px}
+  .steps .s{flex:1;height:5px;border-radius:999px;background:var(--overcast)}
+  .steps .s.on{background:var(--chili)}
+
+  /* results */
+  .verdict{background:var(--navy);color:#fff;border-radius:var(--radius);padding:26px;margin-bottom:20px}
+  .verdict .eyebrow{color:var(--cta)}
+  .verdict h2{color:#fff}
+  .verdict p{color:#d7e0e8;margin-bottom:0}
+  .score{display:flex;align-items:center;gap:14px;margin:6px 0 18px}
+  .score .num{font-family:var(--title);font-size:40px;font-weight:700;line-height:1}
+  .score .bar{flex:1;height:12px;border-radius:999px;background:rgba(255,255,255,.16);overflow:hidden}
+  .score .fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--sunset),var(--cta))}
+  .metricflags{margin:18px 0}
+  .flag{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line);border-radius:11px;margin-bottom:10px;background:#fff;font-size:14.5px}
+  .flag .tag{flex:0 0 auto;font-family:var(--title);text-transform:uppercase;font-size:11px;letter-spacing:.06em;font-weight:600;padding:4px 9px;border-radius:6px;margin-top:1px}
+  .tag.good{background:rgba(0,141,103,.12);color:var(--shamrock)}
+  .tag.warn{background:rgba(239,75,35,.12);color:var(--chili)}
+  .tag.watch{background:rgba(243,117,51,.14);color:var(--sunset)}
+  .tag.na{background:var(--overcast);color:var(--muted)}
+  .order{margin:20px 0;padding:0;list-style:none;counter-reset:o}
+  .order li{position:relative;padding:11px 0 11px 42px;border-bottom:1px solid var(--line);font-size:15px}
+  .order li:last-child{border-bottom:0}
+  .order li::before{counter-increment:o;content:counter(o);position:absolute;left:0;top:9px;width:28px;height:28px;border-radius:50%;background:var(--overcast);color:var(--muted);font-family:var(--title);font-weight:600;display:flex;align-items:center;justify-content:center;font-size:14px}
+  .order li.hit::before{background:var(--chili);color:#fff}
+  .order li.hit{font-weight:600;color:var(--navy)}
+  .offer{border:2px solid var(--chili);border-radius:var(--radius);padding:24px;background:#fff;margin-top:22px}
+  .offer .price{font-family:var(--title);font-size:22px;font-weight:700;color:var(--navy)}
+  .offer .name{font-family:var(--title);text-transform:uppercase;font-size:20px;font-weight:700;color:var(--navy);letter-spacing:.02em;margin-bottom:4px}
+  .tiny{font-size:12.5px;color:var(--muted);text-align:center;margin-top:26px;line-height:1.5}
+  .backlink{background:none;border:0;color:var(--muted);font-size:13.5px;cursor:pointer;text-decoration:underline;padding:6px 0;margin-top:8px}
+  .brandbar{height:6px;border-radius:999px;background:linear-gradient(90deg,var(--navy),var(--cobalt),var(--seaside),var(--shamrock),var(--marigold),var(--chili));margin-bottom:26px}
+  .foot{text-align:center;margin-top:34px;font-size:13px;color:var(--muted)}
+  .spin{display:inline-block;width:18px;height:18px;border:3px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;vertical-align:-4px;margin-right:8px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brandbar"></div>
+
+  <!-- ============ SCREEN 1: LANDING ============ -->
+  <section id="s-landing" class="screen active">
+    <div class="hero">
+      <span class="badge"><span class="dot"></span> For course creators already running Meta ads</span>
+      <h1>Find the #1 thing costing you leads or sales right now</h1>
+      <p class="lede">Paste one of your live Facebook or Instagram ads and your numbers. In about two minutes you get the single biggest fix, ranked the way I'd rank it if I opened your account myself.</p>
+      <ul class="checks">
+        <li><span class="ic">&#10003;</span> I check your ad in the order that actually moves money: tracking, objective, audience, creative, page, then the data.</li>
+        <li><span class="ic">&#10003;</span> You get one clear next fix, not a list of 20 things that leaves you stuck.</li>
+        <li><span class="ic">&#10003;</span> It's built on how I run ads for clients spending $3k to $15k a month.</li>
+      </ul>
+      <div class="who">This only works if you're already running ads. You'll need one of your live ads and a few numbers from Ads Manager. If you're still thinking about running ads, this isn't for you yet.</div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="go('s-form')">Start my ad review</button>
+      </div>
+      <p class="hint" style="margin-top:14px">Takes about 2 minutes. No call, no pitch to sit through.</p>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN 2: SUBMIT / QUALIFY ============ -->
+  <section id="s-form" class="screen">
+    <div class="steps"><span class="s on"></span><span class="s"></span><span class="s"></span></div>
+    <p class="eyebrow">Step 1 of 2 &middot; Your ad</p>
+    <h2>Tell me what you're running</h2>
+    <p class="lede" style="margin-bottom:6px">Fill in what you have. The more real numbers you give me, the sharper the review.</p>
+
+    <div class="card" style="margin-top:20px">
+      <label class="q">What are you running this ad to? <span class="req">*</span></label>
+      <select id="f-goal">
+        <option value="">Choose one</option>
+        <option value="leadmagnet">A free lead magnet (opt-in)</option>
+        <option value="webinar">A free webinar, challenge, or workshop</option>
+        <option value="lto">A low-ticket offer ($7 to $47)</option>
+        <option value="launch">A launch (paid course or program)</option>
+        <option value="other">Something else</option>
+      </select>
+
+      <label class="q">What campaign objective did you pick? <span class="req">*</span></label>
+      <select id="f-objective">
+        <option value="">Choose one</option>
+        <option value="leads">Leads</option>
+        <option value="sales">Sales</option>
+        <option value="traffic">Traffic</option>
+        <option value="engagement">Engagement</option>
+        <option value="awareness">Awareness / Reach</option>
+        <option value="unsure">Not sure</option>
+      </select>
+
+      <label class="q">Is your pixel and Conversions API (CAPI) set up? <span class="req">*</span></label>
+      <select id="f-tracking">
+        <option value="">Choose one</option>
+        <option value="both">Yes, pixel and CAPI both</option>
+        <option value="pixel">Pixel only</option>
+        <option value="unsure">Not sure</option>
+        <option value="no">No</option>
+      </select>
+
+      <label class="q">Paste the main copy from this ad
+        <span class="sub">The hook and body text. Optional, but it sharpens the read.</span>
+      </label>
+      <textarea id="f-copy" placeholder="Attention course creators who&hellip;"></textarea>
+
+      <label class="q">Screenshot of the ad and your metrics
+        <span class="sub">Optional. The live version reads your screenshot directly.</span>
+      </label>
+      <label class="filedrop" for="f-file">
+        <span id="f-file-label">Tap to add a screenshot (ad or Ads Manager numbers)</span>
+        <input type="file" id="f-file" accept="image/*" />
+        <div class="filename" id="f-file-name"></div>
+      </label>
+
+      <label class="q">Your numbers from the last few days
+        <span class="sub">Enter the ones you have. Leave the rest blank.</span>
+      </label>
+      <div class="grid2">
+        <div>
+          <input type="number" step="0.01" id="f-ctr" placeholder="Link CTR %" />
+          <div class="hint">Link CTR, e.g. 0.9</div>
+        </div>
+        <div>
+          <input type="number" step="0.01" id="f-cpr" placeholder="Cost per result $" />
+          <div class="hint">Cost per lead or per sale</div>
+        </div>
+        <div>
+          <input type="number" id="f-reach" placeholder="Reach (people)" />
+          <div class="hint">Unique people reached</div>
+        </div>
+        <div>
+          <input type="number" step="0.1" id="f-freq" placeholder="Frequency" />
+          <div class="hint">e.g. 1.8</div>
+        </div>
+        <div>
+          <input type="number" step="0.1" id="f-optin" placeholder="Opt-in / page conversion %" />
+          <div class="hint">If sending to a page, e.g. 22</div>
+        </div>
+        <div>
+          <input type="number" id="f-spend" placeholder="Daily budget $" />
+          <div class="hint">Per day, this campaign</div>
+        </div>
+      </div>
+
+      <label class="q">Over the last 3 to 4 days, your cost per result is <span class="req">*</span></label>
+      <select id="f-trend">
+        <option value="">Choose one</option>
+        <option value="down">Stable or going down</option>
+        <option value="up">Climbing</option>
+        <option value="early">Too early to tell (under 4 days or under 500 reach)</option>
+      </select>
+
+      <label class="q">If you had to name your biggest worry right now <span class="req">*</span></label>
+      <select id="f-worry">
+        <option value="">Choose one</option>
+        <option value="creative">My creative isn't stopping the scroll</option>
+        <option value="copy">My copy isn't landing</option>
+        <option value="leadcost">Leads or results cost too much</option>
+        <option value="scale">I can't tell what to keep, kill, or scale</option>
+        <option value="nosales">I'm getting clicks but no sales</option>
+        <option value="unsure">Honestly, I don't know what's wrong</option>
+      </select>
+
+      <div class="err" id="form-err">Pick an answer for each starred question so I can give you a real read.</div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="submitForm()">See my #1 fix</button>
+      </div>
+      <button class="backlink" onclick="go('s-landing')">Back</button>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN 3: EMAIL GATE ============ -->
+  <section id="s-gate" class="screen">
+    <div class="steps"><span class="s on"></span><span class="s on"></span><span class="s"></span></div>
+    <p class="eyebrow">Step 2 of 2 &middot; Your result</p>
+    <h2>Your ad review is ready</h2>
+    <p class="lede">I found the biggest thing to fix first. Tell me where to send it and I'll show it to you now and email you a copy to keep.</p>
+    <div class="card" style="margin-top:18px">
+      <label class="q">First name <span class="req">*</span></label>
+      <input type="text" id="g-name" placeholder="First name" autocomplete="given-name" />
+      <label class="q">Email <span class="req">*</span></label>
+      <input type="email" id="g-email" placeholder="you@email.com" autocomplete="email" />
+      <div class="err" id="gate-err">Add your first name and a real email so I can send your review.</div>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="gate-btn" onclick="unlock()">Show my result</button>
+      </div>
+      <p class="hint" style="margin-top:14px">One email with your result, plus my weekly ads notes. Unsubscribe anytime.</p>
+    </div>
+    <button class="backlink" onclick="go('s-form')">Back to my ad</button>
+  </section>
+
+  <!-- ============ SCREEN 4: RESULTS ============ -->
+  <section id="s-results" class="screen">
+    <div class="steps"><span class="s on"></span><span class="s on"></span><span class="s on"></span></div>
+    <div class="verdict">
+      <p class="eyebrow">Your #1 fix</p>
+      <h2 id="r-headline">&nbsp;</h2>
+      <div class="score">
+        <span class="num" id="r-score">&ndash;</span>
+        <div class="bar"><div class="fill" id="r-fill" style="width:0%"></div></div>
+      </div>
+      <p id="r-verdict-sub">&nbsp;</p>
+    </div>
+
+    <div class="card">
+      <h3 style="color:var(--chili)">Why this is the thing to fix first</h3>
+      <p id="r-why"></p>
+      <h3 style="color:var(--navy);margin-top:20px">Do this next</h3>
+      <p id="r-fix"></p>
+
+      <div class="metricflags" id="r-flags"></div>
+
+      <h3 style="color:var(--navy);margin-top:6px">Where your ad sits in my check order</h3>
+      <p class="hint" style="margin-top:-6px">I check ads in this order because fixing something at the top makes everything below it work better. Your issue is marked.</p>
+      <ol class="order" id="r-order"></ol>
+    </div>
+
+    <div class="offer" id="r-offer">
+      <p class="eyebrow">Your fastest next step</p>
+      <div class="name" id="o-name"></div>
+      <p id="o-desc"></p>
+      <div class="price" id="o-price"></div>
+      <div class="btn-row">
+        <a id="o-link" href="#" target="_blank" rel="noopener"><button class="btn btn-primary" id="o-btn">Get it</button></a>
+      </div>
+      <p class="hint" id="o-note" style="margin-top:12px"></p>
+    </div>
+
+    <p class="tiny">This review is a starting point based on what you entered, not a full account audit. Nothing about ads is ever 100% guaranteed, but fixing the top issue first is where the money is.</p>
+    <button class="backlink" onclick="restart()">Review another ad</button>
+    <div class="foot">The Art of Online Business &middot; Responsible growth advertising</div>
+  </section>
+</div>
+
+<script>
+/* =====================================================================
+   CONFIG  —  edit these to wire the live version. Everything else runs
+   as-is in demo mode (the diagnosis works offline from your method).
+   ===================================================================== */
+const CONFIG = {
+  // Where to send captured leads. Paste a Zapier/Make catch-hook URL, or
+  // your ESP's endpoint. Leave "" to skip sending (demo mode).
+  LEAD_CAPTURE_URL: "",
+
+  // Optional: a serverless endpoint that runs the ad copy + screenshot
+  // through the live AI review (grounded in ads-consulting-method.md).
+  // Leave "" to use the built-in rules read below.
+  AI_ANALYZE_URL: "",
+
+  // Offer routing. URLs pulled from bizops-context.md. Edit any time.
+  OFFERS: {
+    audit:  { name:"The 48-Hour Ad Audit", price:"$567", url:"https://quayjo.thrivecart.com/audit/",
+              desc:"You send me the account, I send back a prioritized fix plan within 48 hours. When the foundation is off, this is the fastest way to stop lighting money on fire." },
+    testing:{ name:"The Ad Testing Cheat Code", price:"$37", url:"https://quayjo.thrivecart.com/ad-testing-cheat-code/",
+              desc:"My testing order for cutting lead cost without guessing. Built for lead magnet and webinar ads that need cheaper results." },
+    lto:    { name:"The Low-Ticket Offer Ad Playbook", price:"$37", url:"https://quayjo.thrivecart.com/lto",
+              desc:"A day-by-day read on what to keep, kill, and raise budget on when you're running ads to a $7 to $47 offer. Order bump adds 5 proven ad copy examples for $17." },
+    canva:  { name:"The 2X ROAS Canva Ad Templates", price:"$37", url:"https://quayjo.thrivecart.com/canva-ad-templates/",
+              desc:"23 plug-and-play Facebook and Instagram templates built from my best client images, so your creative stops the scroll without hiring a designer. Order bump adds the Ad Copy Vault for $17." },
+    copyvault:{ name:"The 2X ROAS Ad Copy Vault", price:"$37", url:"https://quayjo.thrivecart.com/2x-adcopy/",
+              desc:"Five ad copy templates and five hooks from client ads that hit 2X ROAS or better, plus the headline approach for low-ticket offers. Customize and publish in about 30 minutes. Order bump adds the Canva templates for $17." },
+    adroom: { name:"The Ad Room", price:"$597/mo x5 or $2,500", url:"https://quayjo.thrivecart.com/ad-room",
+              desc:"My group program. I audit your account, hand you your Blueprint, and we work your ads in weekly office hours and daily lightning rounds. For when the ads work and you want eyes on them as you grow." }
+  }
+};
+
+/* =====================================================================
+   STATE + NAVIGATION
+   ===================================================================== */
+let ANSWERS = {};
+let RESULT = null;
+
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function restart(){ go('s-landing'); }
+
+/* file label */
+document.getElementById('f-file').addEventListener('change',function(){
+  const n = this.files && this.files[0] ? this.files[0].name : '';
+  document.getElementById('f-file-name').textContent = n ? ('Added: '+n) : '';
+  document.getElementById('f-file-label').textContent = n ? 'Screenshot added' : 'Tap to add a screenshot (ad or Ads Manager numbers)';
+});
+
+/* =====================================================================
+   STEP 1: collect + validate
+   ===================================================================== */
+function num(id){ const v = parseFloat(document.getElementById(id).value); return isNaN(v)?null:v; }
+function val(id){ return document.getElementById(id).value; }
+
+function submitForm(){
+  const required = ['f-goal','f-objective','f-tracking','f-trend','f-worry'];
+  const missing = required.some(id=>!val(id));
+  if(missing){ document.getElementById('form-err').style.display='block'; return; }
+  document.getElementById('form-err').style.display='none';
+
+  ANSWERS = {
+    goal: val('f-goal'),
+    objective: val('f-objective'),
+    tracking: val('f-tracking'),
+    copy: val('f-copy'),
+    hasScreenshot: !!(document.getElementById('f-file').files||[]).length,
+    ctr: num('f-ctr'),
+    cpr: num('f-cpr'),
+    reach: num('f-reach'),
+    freq: num('f-freq'),
+    optin: num('f-optin'),
+    spend: num('f-spend'),
+    trend: val('f-trend'),
+    worry: val('f-worry')
+  };
+  RESULT = diagnose(ANSWERS);
+  go('s-gate');
+}
+
+/* =====================================================================
+   STEP 2: email gate -> capture -> reveal
+   ===================================================================== */
+function unlock(){
+  const name = val('g-name').trim();
+  const email = val('g-email').trim();
+  const okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  if(!name || !okEmail){ document.getElementById('gate-err').style.display='block'; return; }
+  document.getElementById('gate-err').style.display='none';
+
+  const btn = document.getElementById('gate-btn');
+  btn.innerHTML = '<span class="spin"></span> Building your result';
+
+  captureLead(name,email).finally(()=>{
+    renderResult(RESULT);
+    btn.innerHTML = 'Show my result';
+    go('s-results');
+  });
+}
+
+async function captureLead(name,email){
+  const payload = {
+    name, email,
+    primary_problem: RESULT ? RESULT.key : null,
+    primary_headline: RESULT ? RESULT.headline : null,
+    routed_offer: RESULT ? RESULT.offer.name : null,
+    routed_offer_url: RESULT ? RESULT.offer.url : null,
+    routed_sequence: RESULT ? RESULT.seq : null,
+    goal: ANSWERS.goal, objective: ANSWERS.objective, tracking: ANSWERS.tracking,
+    ctr: ANSWERS.ctr, cost_per_result: ANSWERS.cpr, reach: ANSWERS.reach,
+    frequency: ANSWERS.freq, optin_rate: ANSWERS.optin, trend: ANSWERS.trend,
+    self_reported_worry: ANSWERS.worry, submitted_copy: ANSWERS.copy
+  };
+  if(!CONFIG.LEAD_CAPTURE_URL){ console.log('[demo] lead captured:', payload); return; }
+  try{
+    await fetch(CONFIG.LEAD_CAPTURE_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  }catch(e){ console.warn('lead capture failed', e); }
+}
+
+/* =====================================================================
+   THE DIAGNOSTIC ENGINE  (from ads-consulting-method.md)
+   Picks ONE biggest problem, foundation first, then routes to an offer.
+   Order of priority mirrors Kwadwo's diagnostic order:
+   tracking -> objective -> audience/creative -> landing page -> data.
+   ===================================================================== */
+const CHECK_ORDER = [
+  {key:'tracking',   label:'Tracking (pixel + CAPI firing)'},
+  {key:'objective',  label:'Campaign objective matches the goal'},
+  {key:'audience',   label:'Audience (cold vs warm, right exclusions)'},
+  {key:'creative',   label:'Creative and hook (stops the scroll)'},
+  {key:'copy',       label:'Ad copy (earns the click)'},
+  {key:'page',       label:'Landing page (one job, CTA above the fold)'},
+  {key:'funnel',     label:'Funnel (tripwire, order bump, follow-up)'},
+  {key:'data',       label:'The data (keep, kill, scale)'}
+];
+
+function sellsSomething(goal){ return goal==='lto' || goal==='launch'; }
+function isFreeGoal(goal){ return goal==='leadmagnet' || goal==='webinar'; }
+
+function diagnose(a){
+  const O = CONFIG.OFFERS;
+
+  // ---- 1. TRACKING: if they're selling and tracking is missing/unknown ----
+  if((a.tracking==='no' || a.tracking==='unsure' || a.tracking==='pixel')){
+    // Weight it as #1 only when there is money on the line or they can't see sales.
+    if(sellsSomething(a.goal) || a.worry==='nosales' || a.tracking==='no'){
+      return build('tracking',
+        'Your tracking is the first thing to fix',
+        "Meta can only get you more of what it can see. With the pixel alone, or with CAPI missing, it's flying half blind, and you can't trust a single number in your dashboard. Every fix below this one is guesswork until Meta can see your conversions.",
+        "Confirm the pixel is firing and add the Conversions API. On ThriveCart it's native, turn it on. On Kajabi the pixel fires for leads automatically but CAPI is limited, so watch for false attribution. Tag your ad traffic separately from organic so you can actually tell what's working.",
+        O.audit, 'tracking', a);
+    }
+  }
+
+  // ---- 2. OBJECTIVE: wrong objective is the most common zero-result cause ----
+  if(a.objective==='traffic'){
+    return build('objective',
+      'You told Meta to buy clicks, not customers',
+      "When you pick Traffic, you tell Meta to find people who will tap a link and do nothing else. That's why you can get clicks and no leads or sales. It's the single most common reason ads produce nothing.",
+      "Switch the objective. Use Leads for a lead magnet or free webinar, and Sales for a low-ticket offer, launch, or anything paid. Rebuild the campaign under the right objective. Don't just edit it, start it clean so Meta learns against the right event.",
+      O.audit, 'objective', a);
+  }
+  if(a.objective==='awareness' || a.objective==='engagement'){
+    if(!isFreeGoal(a.goal) || sellsSomething(a.goal)){
+      return build('objective',
+        'Your objective is aimed at the wrong outcome',
+        "Awareness and Engagement optimize for eyeballs and likes, not opt-ins or purchases. Meta will happily spend your budget hitting that goal while your leads and sales stay flat.",
+        "Move to Leads for an opt-in or webinar, or Sales for anything paid. Set the objective to the exact thing you want to count, then let it relearn for a few days before you judge it.",
+        O.audit, 'objective', a);
+    }
+  }
+  if(a.objective==='leads' && sellsSomething(a.goal)){
+    return build('objective',
+      'Your objective and your offer are pulling in opposite directions',
+      "You're running the Leads objective at a paid offer. Meta will optimize for people who fill in a form, not people who pull out a card. Cheap leads, no buyers.",
+      "Switch to the Sales objective so Meta hunts for purchasers. If your pixel doesn't have much purchase data yet, expect a short relearning stretch, and check that your ThriveCart checkout is firing the purchase event.",
+      O.audit, 'objective', a);
+  }
+  if(a.objective==='sales' && isFreeGoal(a.goal)){
+    return build('objective',
+      'You’re asking Meta for buyers on a free offer',
+      "Running the Sales objective at a free lead magnet or webinar tells Meta to find purchasers where there's nothing to purchase. It struggles, and your cost per lead climbs.",
+      "Switch to the Leads objective for the opt-in. Save the Sales objective for the tripwire or low-ticket offer that comes after the free thing.",
+      O.audit, 'objective', a);
+  }
+
+  // ---- 2b. TOO EARLY: below 500 reach or under 4 days, the data is noise ----
+  // Runs before any metric-based branch so we never diagnose off numbers that
+  // haven't stabilized. Foundation checks above still apply, since tracking and
+  // objective are fixable with zero data.
+  if(a.trend==='early' || (a.reach!==null && a.reach < 500)){
+    return build('data',
+      'It’s too early to judge this ad',
+      "Under about 500 people reached, or fewer than 4 days in, the numbers are noise. Good ads have bad days, and turning things off now means reacting to a blip. The most common early mistake is changing things before Meta has learned.",
+      "Let it run to at least 500 reach and 4 days before you touch it, unless something is clearly broken like the wrong objective or a dead pixel. Then read the trend across today, yesterday, and the day before. Stable or dropping cost means leave it alone.",
+      (a.goal==='lto'?O.lto:O.testing), 'data', a);
+  }
+
+  // ---- 3. CREATIVE: weak scroll-stop shows up as a low link CTR ----
+  if(a.ctr!==null && a.ctr < 0.5){
+    return build('creative',
+      'Your creative isn’t stopping the scroll',
+      "A link CTR under 0.5% means people are scrolling right past. The visual's one job is to make someone stop, and yours isn't earning the pause yet. No amount of budget fixes a scroll people don't stop for.",
+      "Test creative first, the way Meta now weights it. Keep one piece of copy and run 3 to 4 different visuals against it: a graphic with the exact result named, a talking-head reel where you're clearly you, and a carousel. Pull your best organic post by post ID so you keep its comments and likes.",
+      O.canva, 'creative', a);
+  }
+  if(a.worry==='creative' && (a.ctr===null || a.ctr < 1)){
+    return build('creative',
+      'Start with the creative, that’s where the click is won or lost',
+      "You named creative as the worry, and your click-through isn't strong enough to rule it out. Since Meta shifted to weighting visuals over copy, the creative is the first lever, not the last.",
+      "Run a creative test: one piece of copy, 3 to 4 visuals. Name the exact outcome in the graphic, try a 30 to 40 second reel with you on camera, and set your video thumbnail by hand instead of letting Meta pick a frame.",
+      O.canva, 'creative', a);
+  }
+
+  // ---- 4. LANDING PAGE / OFFER: good clicks but weak opt-in ----
+  if(a.optin!==null && a.optin < 10 && (a.ctr===null || a.ctr >= 0.8)){
+    return build('page',
+      'Your ad is working, your page is leaking',
+      "Under 10% opt-in from cold traffic is a serious leak, and your clicks look decent, so the drop is happening on the page. That's money you already paid for walking out the door.",
+      "Strip the page to one job. Kill the header and footer navigation so there's nowhere else to click. Put the button above the fold on a phone, because over 90% of your traffic is mobile. First name and email only. Match the page headline to the ad promise word for word.",
+      O.audit, 'page', a);
+  }
+
+  // ---- 5. LEAD COST / TESTING: climbing cost or expensive results ----
+  if(a.worry==='leadcost' || (a.trend==='up' && (a.ctr===null || a.ctr>=0.8))){
+    return build('data',
+      'Your results are getting more expensive, and there’s an order to fixing that',
+      "Cost per result climbing over 3 to 4 days is a trend, not a blip, so it's worth acting on. But throwing budget or new audiences at it randomly usually makes it worse. There's a sequence.",
+      "Work the data in order: check the cost per result trend, then link CTR, then reach, then CPM and frequency. If frequency is over 2 on cold traffic and cost is climbing, refresh the creative. If CTR is healthy but results still cost too much, the problem is usually the offer or the page, not the ad.",
+      (a.goal==='lto'?O.lto:O.testing), 'data', a);
+  }
+
+  // ---- 6. COPY: clicks are lukewarm (CTR between 0.5 and 1) ----
+  if(a.worry==='copy' || (a.ctr!==null && a.ctr >= 0.5 && a.ctr < 1)){
+    return build('copy',
+      'Your copy is getting a shrug, not a click',
+      "A link CTR between 0.5% and 1% means people see the ad and don't feel spoken to. The hook isn't naming the right person and the right pain in the first three lines, which is all most people read before they decide.",
+      "Rebuild the hook to name who you're talking to plus their frustration or goal in the first line. Then test 3 hooks against your winning visual: one frustration angle, one aspiration angle, one specific-outcome angle. Keep the rest of the copy the same so you know it was the hook.",
+      O.copyvault, 'copy', a);
+  }
+
+  // ---- 7. SCALE / KEEP-KILL: metrics look healthy, decision paralysis ----
+  if(a.goal==='lto' && (a.worry==='scale' || a.worry==='nosales')){
+    return build('data',
+      'Your ad is alive, you just can’t read the scoreboard',
+      "You're running to a low-ticket offer and the question isn't whether the ad works, it's what to do next. That's a reading-the-data problem, and guessing here is what stalls most low-ticket offers.",
+      "Use the day-by-day read: what to keep, what to kill, and when to raise budget, in that order. Only scale once it's profitable, and only 15% a day so you don't reset the algorithm. If leads look fine but sales don't come, test the 7-day click, 1-day view window for the longer decision cycle.",
+      O.lto, 'data', a);
+  }
+  if(a.worry==='nosales'){
+    return build('funnel',
+      'Clicks are coming, the sale is breaking somewhere after the ad',
+      "Getting clicks but no sales almost always means the break is past the ad: tracking that hides the purchase, an objective aimed at leads instead of buyers, or a page and offer that don't close. The ad is doing its job.",
+      "Walk it back one step at a time. Confirm the purchase event fires in ThriveCart. Confirm you're on the Sales objective. Then look hard at the checkout page and the price, cold traffic rarely buys over $37 to $47 without warming up first.",
+      O.audit, 'funnel', a);
+  }
+
+  // ---- FALLBACK: things look healthy -> the lever is structure/scaling ----
+  if(a.ctr!==null && a.ctr >= 1 && a.trend==='down'){
+    return build('scaleup',
+      'Good news, your ad is actually working',
+      "Your click-through is strong and your cost is stable or dropping. Nothing here is broken. At this point the lever isn't a fix, it's structure: scaling the winner without breaking it and building the funnel underneath so each lead is worth more.",
+      "Scale vertically first, more budget on the same audience, 15% a day. Add a tripwire or order bump so you recoup ad spend faster. This is the stage where having someone read the account with you pays for itself.",
+      O.adroom, 'data', a);
+  }
+
+  // ---- default catch-all ----
+  return build('data',
+    'Let’s find your biggest lever',
+    "From what you entered, nothing screams broken, which usually means the answer is in the data rather than a single obvious flaw. The move is to read the account in order instead of guessing.",
+    "Go down the list in order: tracking, objective, audience, creative, page, then the numbers. Fix the highest thing that's off before touching anything below it. If you want a second set of eyes on the actual account, that's what the audit is for.",
+    CONFIG.OFFERS.audit, 'data', a);
+}
+
+function build(key, headline, why, fix, offer, hitKey, a){
+  return { key, headline, why, fix, offer, hitKey, seq:seqFor(offer,a), flags:metricFlags(a), score:scoreAd(a) };
+}
+
+/* Which Kajabi email sequence this person should get. Account-level problems
+   route on-page to the audit, but the email nurture sells the goal-matched
+   low-ticket offer, per Kwadwo's routing note (lead magnet/webinar -> testing,
+   low-ticket offer -> playbook). */
+function seqFor(offer, a){
+  const O = CONFIG.OFFERS;
+  if(offer===O.canva) return 'canva';
+  if(offer===O.copyvault) return 'copyvault';
+  if(offer===O.lto) return 'lto';
+  if(offer===O.adroom) return 'adroom';
+  if(offer===O.testing) return 'testing';
+  return a.goal==='lto' ? 'lto' : 'testing';
+}
+
+/* Grade the entered metrics against Kwadwo's benchmarks. */
+function metricFlags(a){
+  const f = [];
+  if(a.ctr!==null){
+    if(a.ctr>=1.25) f.push(['good','Link CTR '+a.ctr+'%','Very strong. People want what the ad is saying.']);
+    else if(a.ctr>=1) f.push(['good','Link CTR '+a.ctr+'%','Strong. The hook and visual are landing.']);
+    else if(a.ctr>=0.5) f.push(['watch','Link CTR '+a.ctr+'%','Lukewarm. Usually the hook or the visual.']);
+    else f.push(['warn','Link CTR '+a.ctr+'%','Below 0.5%. The creative isn’t stopping the scroll.']);
+  } else f.push(['na','Link CTR','Not entered. This is the second most useful number after cost trend.']);
+
+  if(a.optin!==null){
+    if(a.optin>=25) f.push(['good','Opt-in '+a.optin+'%','Stellar for cold traffic.']);
+    else if(a.optin>=15) f.push(['good','Opt-in '+a.optin+'%','Solid.']);
+    else if(a.optin>=10) f.push(['watch','Opt-in '+a.optin+'%','Targeting or page language is off.']);
+    else f.push(['warn','Opt-in '+a.optin+'%','Serious leak on the page or the targeting.']);
+  }
+
+  if(a.freq!==null){
+    if(a.freq<2) f.push(['good','Frequency '+a.freq,'Fine for cold traffic.']);
+    else if(a.freq<3) f.push(['watch','Frequency '+a.freq,'Watch it. Refresh creative if cost climbs.']);
+    else f.push(['warn','Frequency '+a.freq,'High. Refresh the creative.']);
+  }
+
+  if(a.reach!==null && a.reach<500) f.push(['watch','Reach '+a.reach,'Under 500. Too early to trust the numbers.']);
+
+  if(a.trend==='up') f.push(['warn','Cost trend','Climbing over several days. That’s a real signal, not a blip.']);
+  else if(a.trend==='down') f.push(['good','Cost trend','Stable or dropping. Leave winners alone.']);
+
+  if(a.tracking==='no' || a.tracking==='unsure' || a.tracking==='pixel')
+    f.push(['warn','Tracking','Pixel-only or unknown. Add CAPI so Meta can see conversions.']);
+  else if(a.tracking==='both') f.push(['good','Tracking','Pixel and CAPI both on. Good foundation.']);
+
+  return f;
+}
+
+/* A rough 0-100 health read, weighted toward what Kwadwo checks first. */
+function scoreAd(a){
+  let s = 55;
+  if(a.tracking==='both') s+=10; else if(a.tracking==='no') s-=15; else s-=6;
+  if(a.objective==='traffic') s-=20;
+  if((a.objective==='leads'&&sellsSomething(a.goal))||(a.objective==='sales'&&isFreeGoal(a.goal))) s-=12;
+  if((a.objective==='leads'&&isFreeGoal(a.goal))||(a.objective==='sales'&&sellsSomething(a.goal))) s+=8;
+  if(a.ctr!==null){ if(a.ctr>=1.25)s+=16; else if(a.ctr>=1)s+=12; else if(a.ctr>=0.5)s-=4; else s-=16; }
+  if(a.optin!==null){ if(a.optin>=25)s+=10; else if(a.optin>=15)s+=6; else if(a.optin>=10)s-=4; else s-=12; }
+  if(a.trend==='down')s+=8; else if(a.trend==='up')s-=10;
+  if(a.freq!==null&&a.freq>=3)s-=6;
+  return Math.max(8,Math.min(96,Math.round(s)));
+}
+
+/* =====================================================================
+   RENDER RESULTS
+   ===================================================================== */
+function renderResult(r){
+  document.getElementById('r-headline').textContent = r.headline;
+  document.getElementById('r-why').textContent = r.why;
+  document.getElementById('r-fix').textContent = r.fix;
+
+  const score = r.score;
+  document.getElementById('r-score').textContent = score;
+  setTimeout(()=>{ document.getElementById('r-fill').style.width = score+'%'; }, 120);
+  const sub = score>=75 ? "Strong ad. The note below is about squeezing more out of a winner."
+            : score>=45 ? "Fixable. One clear thing is holding this back more than the rest."
+            : "There's a lot of upside here once the top issue is handled.";
+  document.getElementById('r-verdict-sub').textContent = sub;
+
+  // metric flags
+  const flagsEl = document.getElementById('r-flags');
+  flagsEl.innerHTML = '';
+  r.flags.forEach(([tag,label,note])=>{
+    const d = document.createElement('div');
+    d.className='flag';
+    d.innerHTML = '<span class="tag '+tag+'">'+tag+'</span><div><strong>'+label+'.</strong> '+note+'</div>';
+    flagsEl.appendChild(d);
+  });
+
+  // check order
+  const ol = document.getElementById('r-order');
+  ol.innerHTML='';
+  CHECK_ORDER.forEach(step=>{
+    const li = document.createElement('li');
+    li.textContent = step.label;
+    if(step.key===r.hitKey){ li.classList.add('hit'); li.textContent += '  ← your #1 fix'; }
+    ol.appendChild(li);
+  });
+
+  // offer
+  document.getElementById('o-name').textContent = r.offer.name;
+  document.getElementById('o-desc').textContent = r.offer.desc;
+  document.getElementById('o-price').textContent = r.offer.price;
+  document.getElementById('o-link').href = r.offer.url;
+
+  // context line under the button
+  const noteMap = {
+    audit:"When the foundation is off, a second set of eyes on the real account is faster than trial and error.",
+    testing:"Cheaper results come from testing in the right order, not from more budget.",
+    lto:"This is the exact decision sequence I'd walk through if it were my account.",
+    canva:"Meta now weights the visual first, so this is the fastest lever you have.",
+    copyvault:"Skip the blank page. Start from copy that already hit 2X ROAS and make it yours.",
+    adroom:"For when the ads work and you want them read with you every week."
+  };
+  const okey = Object.keys(CONFIG.OFFERS).find(k=>CONFIG.OFFERS[k].url===r.offer.url);
+  document.getElementById('o-note').textContent = noteMap[okey] || '';
+}
+</script>
+</body>
+</html>
