@@ -54,7 +54,7 @@
 
   /* hero */
   .hero{padding:28px 0 10px}
-  .badge{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--navy);margin-bottom:18px}
+  .badge{display:inline-flex;align-items:center;gap:9px;background:#fff;border:1.5px solid var(--chili);border-radius:999px;padding:10px 20px;font-size:15.5px;font-weight:700;color:var(--navy);margin-bottom:20px;line-height:1.25}
   .dot{width:8px;height:8px;border-radius:50%;background:var(--shamrock);display:inline-block}
   .checks{margin:22px 0 0;padding:0;list-style:none}
   .checks li{display:flex;gap:11px;align-items:flex-start;margin-bottom:11px;font-size:16px}
@@ -119,7 +119,13 @@
   .offer .name{font-family:var(--title);text-transform:uppercase;font-size:20px;font-weight:700;color:var(--navy);letter-spacing:.02em;margin-bottom:4px}
   .tiny{font-size:12.5px;color:var(--muted);text-align:center;margin-top:26px;line-height:1.5}
   .backlink{background:none;border:0;color:var(--muted);font-size:13.5px;cursor:pointer;text-decoration:underline;padding:6px 0;margin-top:8px}
-  .brandbar{height:6px;border-radius:999px;background:linear-gradient(90deg,var(--navy),var(--cobalt),var(--seaside),var(--shamrock),var(--marigold),var(--chili));margin-bottom:26px}
+  .brandbar{display:flex;height:8px;border-radius:999px;overflow:hidden;margin-bottom:26px}
+  .brandbar span{flex:1}
+  .bio{display:flex;gap:18px;align-items:center;margin-top:30px;padding:20px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .bio img{width:96px;height:96px;border-radius:14px;object-fit:cover;flex:0 0 auto}
+  .bio h3{font-size:15px;color:var(--chili);margin-bottom:6px}
+  .bio p{font-size:14.5px;color:var(--muted);margin:0}
+  @media(max-width:520px){.bio{flex-direction:column;text-align:center}}
   .foot{text-align:center;margin-top:34px;font-size:13px;color:var(--muted)}
   .spin{display:inline-block;width:18px;height:18px;border:3px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;vertical-align:-4px;margin-right:8px}
   @keyframes sp{to{transform:rotate(360deg)}}
@@ -127,12 +133,12 @@
 </head>
 <body>
 <div class="wrap">
-  <div class="brandbar"></div>
+  <div class="brandbar"><span style="background:var(--navy)"></span><span style="background:var(--cobalt)"></span><span style="background:var(--seaside)"></span><span style="background:var(--shamrock)"></span><span style="background:var(--sunset)"></span><span style="background:var(--chili)"></span></div>
 
   <!-- ============ SCREEN 1: LANDING ============ -->
   <section id="s-landing" class="screen active">
     <div class="hero">
-      <span class="badge"><span class="dot"></span> For course creators already running Meta ads</span>
+      <span class="badge"><span class="dot"></span> Only for course creators and coaches already running Meta ads</span>
       <h1>Find the #1 thing costing you leads or sales right now</h1>
       <p class="lede">Paste one of your live Facebook or Instagram ads and your numbers. In about two minutes you get the single biggest fix, ranked the way I'd rank it if I opened your account myself.</p>
       <ul class="checks">
@@ -145,6 +151,14 @@
         <button class="btn btn-primary" onclick="go('s-form')">Start my ad review</button>
       </div>
       <p class="hint" style="margin-top:14px">Takes about 2 minutes. No call, no pitch to sit through.</p>
+
+      <section class="bio">
+        <img src="podcast.jpg" alt="Kwadwo, host of The Art of Online Business" />
+        <div>
+          <h3>Who's reviewing your ad</h3>
+          <p>I'm Kwadwo, say QUĀY-jo. I run Facebook and Instagram ads for online course creators, a lot of them earning $350k to $1.2M a year, and I host The Art of Online Business podcast, which has passed 5 million downloads. This is the same first read I'd give a paying client, in the same order I'd actually check the account.</p>
+        </div>
+      </section>
     </div>
   </section>
 
@@ -192,7 +206,7 @@
       <textarea id="f-copy" placeholder="Attention course creators who&hellip;"></textarea>
 
       <label class="q">Screenshot of the ad and your metrics
-        <span class="sub">Optional. The live version reads your screenshot directly.</span>
+        <span class="sub">Two shots help most. First, your Ads Manager table set to the last 3 to 4 days (or the by-day breakdown) showing cost per result, CTR all, CTR link, reach, frequency, CPM, amount spent, results, and ROAS if you're selling. Second, the ad itself, the visual plus the primary text and headline. The live version reads these directly.</span>
       </label>
       <label class="filedrop" for="f-file">
         <span id="f-file-label">Tap to add a screenshot (ad or Ads Manager numbers)</span>
@@ -204,6 +218,10 @@
         <span class="sub">Enter the ones you have. Leave the rest blank.</span>
       </label>
       <div class="grid2">
+        <div>
+          <input type="number" step="0.01" id="f-ctrall" placeholder="CTR all %" />
+          <div class="hint">CTR (all), e.g. 1.4</div>
+        </div>
         <div>
           <input type="number" step="0.01" id="f-ctr" placeholder="Link CTR %" />
           <div class="hint">Link CTR, e.g. 0.9</div>
@@ -228,7 +246,18 @@
           <input type="number" id="f-spend" placeholder="Daily budget $" />
           <div class="hint">Per day, this campaign</div>
         </div>
+        <div>
+          <input type="number" step="0.01" id="f-cpm" placeholder="CPM $" />
+          <div class="hint">Cost per 1,000, e.g. 18</div>
+        </div>
       </div>
+
+      <label class="q">Is your ad set showing "Learning Limited"?</label>
+      <select id="f-ll">
+        <option value="">Not sure or it doesn't say</option>
+        <option value="yes">Yes, it says Learning Limited</option>
+        <option value="no">No, it's out of learning</option>
+      </select>
 
       <label class="q">Over the last 3 to 4 days, your cost per result is <span class="req">*</span></label>
       <select id="f-trend">
@@ -335,6 +364,9 @@ const CONFIG = {
   // Leave "" to use the built-in rules read below.
   AI_ANALYZE_URL: "",
 
+  // Meta pixel. Paste Kwadwo's numeric Pixel ID to switch on PageView + Lead tracking.
+  PIXEL_ID: "757101149271608",
+
   // Offer routing. URLs pulled from bizops-context.md. Edit any time.
   OFFERS: {
     audit:  { name:"The 48-Hour Ad Audit", price:"$567", url:"https://quayjo.thrivecart.com/audit/",
@@ -351,6 +383,16 @@ const CONFIG = {
               desc:"My group program. I audit your account, hand you your Blueprint, and we work your ads in weekly office hours and daily lightning rounds. For when the ads work and you want eyes on them as you grow." }
   }
 };
+
+/* =====================================================================
+   META PIXEL  — PageView on load, Lead fires on email submit (see unlock()).
+   ===================================================================== */
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+if(CONFIG.PIXEL_ID){ fbq('init', CONFIG.PIXEL_ID); fbq('track', 'PageView'); }
 
 /* =====================================================================
    STATE + NAVIGATION
@@ -391,6 +433,9 @@ function submitForm(){
     copy: val('f-copy'),
     hasScreenshot: !!(document.getElementById('f-file').files||[]).length,
     ctr: num('f-ctr'),
+    ctrall: num('f-ctrall'),
+    ll: val('f-ll'),
+    cpm: num('f-cpm'),
     cpr: num('f-cpr'),
     reach: num('f-reach'),
     freq: num('f-freq'),
@@ -412,6 +457,8 @@ function unlock(){
   const okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   if(!name || !okEmail){ document.getElementById('gate-err').style.display='block'; return; }
   document.getElementById('gate-err').style.display='none';
+
+  if(window.fbq && CONFIG.PIXEL_ID){ fbq('track', 'Lead'); }
 
   const btn = document.getElementById('gate-btn');
   btn.innerHTML = '<span class="spin"></span> Building your result';
@@ -509,6 +556,15 @@ function diagnose(a){
       O.audit, 'objective', a);
   }
 
+  // ---- 2a. LEARNING LIMITED: structural, diagnosable straight from the flag ----
+  if(a.ll==='yes'){
+    return build('data',
+      'Your ad set is stuck in Learning Limited',
+      "Meta needs about 50 conversions in a 7-day window to learn who to show your ad to. Learning Limited means it isn't getting there, so it never really optimizes and your cost per result stays high and jumpy. This is a structure problem, not a creative one.",
+      "Give the algorithm enough to learn from. Raise the daily budget toward roughly 50 times your target cost per result divided by 7, consolidate thin ad sets into one, and broaden the audience with Advantage Plus instead of narrow interest stacks. If your budget genuinely can't support 50 conversions a week, the fix is upstream: a more compelling lead magnet, tighter targeting with lookalikes, and a tripwire so each lead helps pay for itself.",
+      (a.goal==='lto'?O.lto:O.testing), 'data', a);
+  }
+
   // ---- 2b. TOO EARLY: below 500 reach or under 4 days, the data is noise ----
   // Runs before any metric-based branch so we never diagnose off numbers that
   // haven't stabilized. Foundation checks above still apply, since tracking and
@@ -521,12 +577,12 @@ function diagnose(a){
       (a.goal==='lto'?O.lto:O.testing), 'data', a);
   }
 
-  // ---- 3. CREATIVE: weak scroll-stop shows up as a low link CTR ----
-  if(a.ctr!==null && a.ctr < 0.5){
+  // ---- 3. CREATIVE: low CTR (all) or very low link CTR = the visual isn't stopping the scroll ----
+  if((a.ctrall!==null && a.ctrall < 1) || (a.ctr!==null && a.ctr < 0.5)){
     return build('creative',
       'Your creative isn’t stopping the scroll',
-      "A link CTR under 0.5% means people are scrolling right past. The visual's one job is to make someone stop, and yours isn't earning the pause yet. No amount of budget fixes a scroll people don't stop for.",
-      "Test creative first, the way Meta now weights it. Keep one piece of copy and run 3 to 4 different visuals against it: a graphic with the exact result named, a talking-head reel where you're clearly you, and a carousel. Pull your best organic post by post ID so you keep its comments and likes.",
+      "Your CTR on all clicks is under 1%, or your link clicks are under half a percent. Either way people are scrolling past the visual, and the visual's one job is to make them stop. No amount of budget fixes a scroll people don't stop for.",
+      "Test creative first, the way Meta now weights it. If it's a graphic, make a new one with fewer words and more impact, and nudge up the saturation and contrast. If it's a video, try a new thumbnail and a stronger hook in the first few seconds, and cut it shorter. Keep one piece of copy and run 3 to 4 visuals against it, and pull your best organic post by post ID so you keep its comments and likes.",
       O.canva, 'creative', a);
   }
   if(a.worry==='creative' && (a.ctr===null || a.ctr < 1)){
@@ -546,6 +602,24 @@ function diagnose(a){
       O.audit, 'page', a);
   }
 
+  // ---- FREQUENCY: fatigue drives cost up (cold >3, warm >5-6) ----
+  if(a.freq!==null && a.freq > 3){
+    return build('data',
+      'Your audience is seeing this ad too many times',
+      "Frequency past about 3 on cold traffic means the same people keep seeing the ad, clicks slide, and cost per result climbs. That's fatigue, and adding budget just spends more to show a tired ad to the same faces.",
+      "Refresh before you scale. On cold audiences over 3, move to a larger audience of 1.5 million plus, or drop a fresh ad into the set. On warm audiences over 5 or 6, rotate in new ads: take a winning graphic and remake it in different colors, or a winning reel with a new cover.",
+      (a.goal==='lto'?O.lto:O.testing), 'data', a);
+  }
+
+  // ---- CPM: expensive to even reach the audience ----
+  if(a.cpm!==null && a.cpm > 30){
+    return build('data',
+      'It’s costing too much just to reach people',
+      "A CPM over about $30 means Meta is paying a premium to put your ad in front of people, which drags every downstream cost up with it. Right now average sits closer to $12 to $15. High CPM usually traces to the audience or how the ad is received, not your budget.",
+      "Check audience size first, a pool that's too small spikes CPM. Move off narrow interest stacks and Facebook's suggested audiences toward a lookalike or Advantage Plus. Get a few real people to leave good comments on the ad so it reads as trusted, and scrub the copy for words Meta tends to penalize.",
+      (a.goal==='lto'?O.lto:O.testing), 'data', a);
+  }
+
   // ---- 5. LEAD COST / TESTING: climbing cost or expensive results ----
   if(a.worry==='leadcost' || (a.trend==='up' && (a.ctr===null || a.ctr>=0.8))){
     return build('data',
@@ -555,12 +629,12 @@ function diagnose(a){
       (a.goal==='lto'?O.lto:O.testing), 'data', a);
   }
 
-  // ---- 6. COPY: clicks are lukewarm (CTR between 0.5 and 1) ----
-  if(a.worry==='copy' || (a.ctr!==null && a.ctr >= 0.5 && a.ctr < 1)){
+  // ---- 6. COPY / HEADLINE: link CTR low while CTR (all) is okay = the words aren't earning the click ----
+  if(a.worry==='copy' || (a.ctr!==null && a.ctr < 1 && (a.ctrall===null || a.ctrall >= 1))){
     return build('copy',
       'Your copy is getting a shrug, not a click',
-      "A link CTR between 0.5% and 1% means people see the ad and don't feel spoken to. The hook isn't naming the right person and the right pain in the first three lines, which is all most people read before they decide.",
-      "Rebuild the hook to name who you're talking to plus their frustration or goal in the first line. Then test 3 hooks against your winning visual: one frustration angle, one aspiration angle, one specific-outcome angle. Keep the rest of the copy the same so you know it was the hook.",
+      "Your link CTR is under 1% even though the visual is pulling people in. That gap is the copy and the headline. The first line isn't naming the right person and the right pain, which is all most people read before they decide to click or scroll on.",
+      "Check that you actually put a link in the first line or two of the copy, then rewrite that opening to name who you're talking to plus their frustration or goal. Test a new headline too. Then run 3 hook angles against your winning visual, one frustration, one aspiration, one specific outcome, and keep the rest the same so you know it was the hook.",
       O.copyvault, 'copy', a);
   }
 
@@ -598,7 +672,10 @@ function diagnose(a){
 }
 
 function build(key, headline, why, fix, offer, hitKey, a){
-  return { key, headline, why, fix, offer, hitKey, seq:seqFor(offer,a), flags:metricFlags(a), score:scoreAd(a) };
+  // A real problem shouldn't read as a top score. Only the healthy case keeps its high score.
+  const raw = scoreAd(a);
+  const score = (key==='scaleup') ? raw : Math.min(raw, 72);
+  return { key, headline, why, fix, offer, hitKey, seq:seqFor(offer,a), flags:metricFlags(a), score };
 }
 
 /* Which Kajabi email sequence this person should get. Account-level problems
@@ -625,6 +702,12 @@ function metricFlags(a){
     else f.push(['warn','Link CTR '+a.ctr+'%','Below 0.5%. The creative isn’t stopping the scroll.']);
   } else f.push(['na','Link CTR','Not entered. This is the second most useful number after cost trend.']);
 
+  if(a.ctrall!==null){
+    if(a.ctrall>=1.5) f.push(['good','CTR all '+a.ctrall+'%','Strong. The visual is stopping the scroll.']);
+    else if(a.ctrall>=1) f.push(['good','CTR all '+a.ctrall+'%','About average or better.']);
+    else f.push(['warn','CTR all '+a.ctrall+'%','Under 1%. That points at the creative.']);
+  }
+
   if(a.optin!==null){
     if(a.optin>=25) f.push(['good','Opt-in '+a.optin+'%','Stellar for cold traffic.']);
     else if(a.optin>=15) f.push(['good','Opt-in '+a.optin+'%','Solid.']);
@@ -634,8 +717,14 @@ function metricFlags(a){
 
   if(a.freq!==null){
     if(a.freq<2) f.push(['good','Frequency '+a.freq,'Fine for cold traffic.']);
-    else if(a.freq<3) f.push(['watch','Frequency '+a.freq,'Watch it. Refresh creative if cost climbs.']);
-    else f.push(['warn','Frequency '+a.freq,'High. Refresh the creative.']);
+    else if(a.freq<=3) f.push(['watch','Frequency '+a.freq,'Getting warm. Refresh creative if cost climbs.']);
+    else f.push(['warn','Frequency '+a.freq,'High. The audience is fatiguing. Refresh or widen it.']);
+  }
+
+  if(a.cpm!==null){
+    if(a.cpm<=15) f.push(['good','CPM $'+a.cpm,'Efficient. Meta is finding your audience cheaply.']);
+    else if(a.cpm<=30) f.push(['watch','CPM $'+a.cpm,'On the high side. Watch the audience size.']);
+    else f.push(['warn','CPM $'+a.cpm,'High. Usually the audience or the ad’s reception.']);
   }
 
   if(a.reach!==null && a.reach<500) f.push(['watch','Reach '+a.reach,'Under 500. Too early to trust the numbers.']);
@@ -660,7 +749,10 @@ function scoreAd(a){
   if(a.ctr!==null){ if(a.ctr>=1.25)s+=16; else if(a.ctr>=1)s+=12; else if(a.ctr>=0.5)s-=4; else s-=16; }
   if(a.optin!==null){ if(a.optin>=25)s+=10; else if(a.optin>=15)s+=6; else if(a.optin>=10)s-=4; else s-=12; }
   if(a.trend==='down')s+=8; else if(a.trend==='up')s-=10;
-  if(a.freq!==null&&a.freq>=3)s-=6;
+  if(a.freq!==null&&a.freq>3)s-=6;
+  if(a.ll==='yes')s-=12;
+  if(a.cpm!==null&&a.cpm>30)s-=8;
+  if(a.ctrall!==null&&a.ctrall<1)s-=8;
   return Math.max(8,Math.min(96,Math.round(s)));
 }
 
