@@ -90,12 +90,15 @@
   .filedrop:hover{background:#eef4f7}
   .filedrop:active{transform:scale(.985);background:#e4edf2;border-color:var(--navy)}
   .filedrop input{display:none}
-  .instr{margin:8px 0 0;padding:0 0 0 2px;list-style:none}
-  .instr li{position:relative;padding:8px 0 8px 26px;font-size:15px;color:var(--muted);line-height:1.5;border-bottom:1px solid var(--line)}
+  .instr{margin:10px 0 0;padding:0;list-style:none}
+  .instr li{position:relative;padding:14px 0 14px 26px;border-bottom:1px solid var(--line)}
   .instr li:last-child{border-bottom:0}
-  .instr li::before{content:"";position:absolute;left:2px;top:15px;width:8px;height:8px;border-radius:50%;background:var(--chili)}
+  .instr li::before{content:"";position:absolute;left:2px;top:22px;width:9px;height:9px;border-radius:50%;background:var(--chili)}
+  .ihead{display:block;font-weight:700;color:var(--navy);font-size:18px;margin-bottom:6px}
+  .istep{display:block;font-size:16.5px;color:var(--muted);line-height:1.55;margin:5px 0}
+  .icols{display:block;margin:9px 0;padding:13px 15px;background:var(--island);border:1px solid var(--line);border-radius:10px;font-size:16px;color:var(--navy);font-weight:600;line-height:1.95}
   .instr strong{color:var(--navy)}
-  .callout{margin-top:10px;padding:12px 14px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--marigold);border-radius:10px;font-size:14.5px;color:var(--muted)}
+  .callout{margin-top:12px;padding:14px 16px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--marigold);border-radius:10px;font-size:16.5px;color:var(--ink);line-height:1.5}
   .filename{color:var(--shamrock);font-weight:600;margin-top:8px;font-size:14px}
   .err{color:var(--chili);font-size:13.5px;font-weight:600;margin-top:10px;display:none}
 
@@ -168,7 +171,7 @@
         <img src="podcast.jpg" alt="Kwadwo, host of The Art of Online Business" />
         <div>
           <h3>Who's reviewing your ad</h3>
-          <p>I'm Kwadwo. I've run Facebook and Instagram ads for online course creators since 2020, a lot of them earning $350k to $1.6M a year, and I host The Art of Online Business podcast, which has over 5 million downloads. This is the same first read I'd give a paying client, in the same order I'd actually check the account.</p>
+          <p>I'm Kwadwo (sounds like QUĀY. jo). I've run Facebook and Instagram ads for online course creators since 2020, a lot of them earning $350k to $1.6M a year, and I host The Art of Online Business podcast, which has over 5 million downloads. This is the same type of analysis I'd do for a paying client when we first onboard, in the same order I'd actually check the account.</p>
         </div>
       </section>
     </div>
@@ -183,11 +186,20 @@
 
     <div class="card" style="margin-top:20px">
       <label class="q">Screenshot your ad and your numbers <span class="req">*</span>
-        <span class="sub">Two screenshots give the best read:</span>
+        <span class="sub">Two screenshots give the best results:</span>
       </label>
       <ul class="instr">
-        <li><strong>1. Your Ads Manager numbers.</strong> Set the date to a 4-day range that includes today. Then set your columns to show: Cost per result, CTR (all), CTR (link), Reach, Frequency, CPM, Amount spent, and Results. Add ROAS if this is a sales campaign. To pick those columns, click Columns, then Customize Columns, and choose them.</li>
-        <li><strong>2. The ad itself.</strong> Screenshot the visual, a graphic or video. If it's a carousel, screenshot each slide, 1, 2, 3, and so on.</li>
+        <li>
+          <span class="ihead">1. Your Ads Manager numbers</span>
+          <span class="istep">Set the date range to the last 4 days, including today.</span>
+          <span class="istep">Turn on these columns so they show in your table:</span>
+          <span class="icols">Cost per result &nbsp;&middot;&nbsp; CTR (all) &nbsp;&middot;&nbsp; CTR (link) &nbsp;&middot;&nbsp; Reach &nbsp;&middot;&nbsp; Frequency &nbsp;&middot;&nbsp; CPM &nbsp;&middot;&nbsp; Amount spent &nbsp;&middot;&nbsp; Results &nbsp;&middot;&nbsp; ROAS if it's a sales campaign</span>
+          <span class="istep">To choose them, click <strong>Columns</strong> above your table, then <strong>Customize columns</strong>.</span>
+        </li>
+        <li>
+          <span class="ihead">2. The ad itself</span>
+          <span class="istep">Screenshot the ad's visual, the graphic or video. If it's a carousel, screenshot each slide, one by one.</span>
+        </li>
       </ul>
       <div class="callout">Do this in the real Ads Manager on a laptop or desktop, not the mobile app on your Facebook business page. The numbers and columns you need are only there.</div>
       <label class="filedrop" for="f-file" style="margin-top:14px">
@@ -206,8 +218,8 @@
         <option value="">Choose one</option>
         <option value="leadmagnet">A free lead magnet (opt-in)</option>
         <option value="webinar">A free webinar, challenge, or workshop</option>
+        <option value="paidlaunch">A paid webinar, challenge, boot camp, or workshop</option>
         <option value="lto">A low-ticket offer ($7 to $47)</option>
-        <option value="launch">A paid course or program</option>
         <option value="other">Something else</option>
       </select>
 
@@ -493,7 +505,7 @@ const CHECK_ORDER = [
   {key:'data',       label:'The data (keep, pause, or add budget)'}
 ];
 
-function sellsSomething(goal){ return goal==='lto' || goal==='launch'; }
+function sellsSomething(goal){ return goal==='lto' || goal==='paidlaunch'; }
 function isFreeGoal(goal){ return goal==='leadmagnet' || goal==='webinar'; }
 
 function diagnose(a){
